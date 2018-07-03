@@ -37,7 +37,7 @@ namespace BallBranchTest
             Gate gateTree = objGenerate.InitialiseBranchGateTree();
 
             Prediction objPrediction = new Prediction(depth, totalContainerCount, totalBallCount);
-            objPrediction.PredictResult(gateTree);
+            objPrediction.PredictResultOfContainerNoBall(gateTree);
 
 
             Simulation objSimulate = new Simulation(depth, totalContainerCount, totalBallCount);
@@ -163,114 +163,25 @@ namespace BallBranchTest
             _ballCount = ballCount;
         }
 
-        List<int> GetTreeBitList(int gateFlag, int branchLevel)
+        public long PredictContainerNoBall(Gate gateTree)
         {
-            List<int> bits1 = new List<int>();
-            List<int> bits0 = new List<int>();
-            long i = 0;
-            long count = (long)Math.Pow(2, branchLevel - 1);
-            for (i = 0; i < count; i++)
+            long nContainerIndex = (gateTree.gateFlag == 0) ? (long)Math.Pow(2, gateTree.branchLevel - 1) : 0;
+            if (gateTree.branchLevel > 1)
             {
-                bits1.Add(1);
-                bits0.Add(0);
-            }
-            List<int> bitList = new List<int>();
-            if (gateFlag == 0)
-            {
-                bitList.AddRange(bits0);
-                bitList.AddRange(bits1);
-            }
-            else
-            {
-                bitList.AddRange(bits1);
-                bitList.AddRange(bits0);
-            }
-            return bitList;
-        }
-
-        void GenerateTreeBitList(Gate gateTree, List<int>[] treeLevelBitList)
-        {
-            if (gateTree.left != null)
-                GenerateTreeBitList(gateTree.left, treeLevelBitList);
-            if (gateTree.right != null)
-                GenerateTreeBitList(gateTree.right, treeLevelBitList);
-            treeLevelBitList[gateTree.branchLevel - 1].AddRange(GetTreeBitList(gateTree.gateFlag, gateTree.branchLevel));
-        }
-
-
-        void PrintTreeBitList(List<int> list)
-        {
-            foreach (int b in list)
-                Console.Write(b);
-            Console.WriteLine("");
-        }
-
-        /// <summary>
-        /// convert bit list to integer
-        /// </summary>
-        long GetLongValueFromBits(List<int> list)
-        {
-            bool bFirst = true;
-            long result = 0;
-            foreach (int b in list)
-            {
-                if (!bFirst)
-                {
-                    result = result << 1;
-                    bFirst = false;
-                }
-                result = result | (long)b;
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// get predicted container index from predict bit lists
-        /// </summary>
-        int GetPredictResultFromBitsList(List<int>[] list, int depth)
-        {
-            int nIndex = 0;
-            int CountOfList = (int)Math.Pow(2, depth);
-            for (int i = 0; i < CountOfList; i++)
-            {
-                int tempResult = 1;
-                for (int k = 0; k < list.Length; k++)
-                {
-                    int data = list[k].ElementAt<int>(i);
-                    tempResult = tempResult & data;
-                }
-                if (tempResult > 0)
-                {
-                    nIndex = i;
-                    break;
-                }
-            }
-            return nIndex;
-        }
-
-        public void PredictResult(Gate gateTree)
-        {
-            int depth = _depth;
-            Console.WriteLine("=== Prediction ===");
-            List<int>[] treeLevelBits = new List<int>[depth];
-            for (int k = 0; k < depth; k++)
-                treeLevelBits[k] = new List<int>();
-            // generate predict bit lists to compute predict result
-            GenerateTreeBitList(gateTree, treeLevelBits);
-
-            // compute predict result by bit lists
-            long bitResult = 0;
-            for (int i = 0; i < depth; i++)
-            {
-                //PrintTreeBitList(treeLevelBits[i]);  // debug
-                if (i == 0)
-                    bitResult = GetLongValueFromBits(treeLevelBits[i]);
+                if (gateTree.gateFlag == 0)
+                    nContainerIndex += PredictContainerNoBall(gateTree.right);
                 else
-                    bitResult = bitResult & GetLongValueFromBits(treeLevelBits[i]); // bitwise AND
+                    nContainerIndex += PredictContainerNoBall(gateTree.left);
             }
-            int nResultIndex = GetPredictResultFromBitsList(treeLevelBits, depth);
+            return nContainerIndex;
+        }
 
-            Console.WriteLine("Prediction:\n    Container " + Utility.GetContainerName(nResultIndex) + " does not have a ball\n");
+        public void PredictResultOfContainerNoBall(Gate gateTree)
+        {
+            Console.WriteLine("=== Prediction ===");
+            long nResultContainerIndex = PredictContainerNoBall(gateTree);
+
+            Console.WriteLine("Prediction:\n    Container " + Utility.GetContainerName(nResultContainerIndex) + " does not have a ball\n");
 
         }
 
