@@ -1,0 +1,45 @@
+****** Ball Branch Test Program *****
+
+Input the depth of the tree [from 1 to 5] and press [Enter]
+
+
+
+=== Initial Gate Tree ===
+=== [L]: gate open left, [R]: gate open right
+=== Tree Depth is 4 ===
+
+
+[L]                                                             
+[L]                             [R]                             
+[L]             [L]             [L]             [L]             
+[L]     [R]     [L]     [R]     [R]     [R]     [L]     [R]     
+(A) (B) (C) (D) (E) (F) (G) (H) (I) (J) (K) (L) (M) (N) (O) (P) 
+
+
+=== Prediction ===
+Prediction:
+    Container (K)  does not have a ball
+
+
+=== Simulation ===
+Ball #0: -L-L-L-L  => Go to container (A) 
+Ball #1: -R-R-L-L  => Go to container (M) 
+Ball #2: -L-R-L-L  => Go to container (E) 
+Ball #3: -R-L-L-R  => Go to container (J) 
+Ball #4: -L-L-R-R  => Go to container (D) 
+Ball #5: -R-R-R-R  => Go to container (P) 
+Ball #6: -L-R-R-R  => Go to container (H) 
+Ball #7: -R-L-R-R  => Go to container (L) 
+Ball #8: -L-L-L-R  => Go to container (B) 
+Ball #9: -R-R-L-R  => Go to container (N) 
+Ball #10: -L-R-L-R  => Go to container (F) 
+Ball #11: -R-L-L-L  => Go to container (I) 
+Ball #12: -L-L-R-L  => Go to container (C) 
+Ball #13: -R-R-R-L  => Go to container (O) 
+Ball #14: -L-R-R-L  => Go to container (G) 
+Simulation Result:
+   Container (K)  does not have a ball
+
+
+
+Press [Enter] to close the program ...

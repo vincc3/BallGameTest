@@ -1,0 +1,6 @@
+D:\Test\BallBranchTest\BallBranchTest\obj\Debug\BallBranchTest.csproj.CoreCompileInputs.cache
+D:\Test\BallBranchTest\BallBranchTest\bin\Debug\BallBranchTest.exe.config
+D:\Test\BallBranchTest\BallBranchTest\bin\Debug\BallBranchTest.exe
+D:\Test\BallBranchTest\BallBranchTest\bin\Debug\BallBranchTest.pdb
+D:\Test\BallBranchTest\BallBranchTest\obj\Debug\BallBranchTest.exe
+D:\Test\BallBranchTest\BallBranchTest\obj\Debug\BallBranchTest.pdb
